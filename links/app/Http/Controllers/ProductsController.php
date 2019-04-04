@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use Illuminate\Support\Str;
+
 class ProductsController extends Controller
 {
     public function index(){
@@ -17,7 +19,11 @@ class ProductsController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+       
+     
+
+
+       $request->validate([
             'name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
@@ -35,9 +41,13 @@ class ProductsController extends Controller
     }
 
     public function show(){
-
+         return response()->json([
+        'data' => [
+            'title' => $book->title,
+            'description' => $book->description,
+            'author' => $book->author->name
+        ]
+    ]);
     }
-
-   
 }
 
