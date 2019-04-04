@@ -42,12 +42,6 @@
 */
 //Route::resource('projects', 'ProjectsController');
 
-
-/*Route::get('home', function () {
-    return response('Hello World', 200)
-                  ->header('Content-Type', 'text/plain');
-});*/   
-
 Route::get('/','PagesController@home');
 
 Route::get('/about','PagesController@about');
@@ -72,20 +66,13 @@ Route::delete('/projects/{project}','ProjectsController@destroy');
 
 /* Start Products */
 
-//Route::get('/products', 'ProductsController@index');
-//Route::post('/products', 'ProductsController@store');
-
-Route::post('/products', 'ProductsController@show');
+Route::get('/products', 'ProductsController@index');
+Route::post('/products', 'ProductsController@store');
 
 /* End Products */
 
 Route::get('about/', function () {
-    /*return response('Hello World', 200)
-                  ->header('Content-Type', 'text/plain');*/
-    return response()->json([
-    'name' => 'Abigail',
-    'state' => 'CA'
-]);
+    return view('about');
 });
 
 Route::get('contact/', function () {

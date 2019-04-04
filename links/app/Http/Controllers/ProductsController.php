@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
-use Illuminate\Support\Str;
-
 class ProductsController extends Controller
 {
     public function index(){
@@ -19,15 +17,7 @@ class ProductsController extends Controller
 
     public function store(Request $request)
     {
-       
-        $collection = collect([1, 2]);
-
-        $matrix = $collection->crossJoin(['a', 'b']);
-
-        return $matrix->all();
-
-
-       /* $request->validate([
+        $request->validate([
             'name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
@@ -41,17 +31,13 @@ class ProductsController extends Controller
         $product->quantity = $request->quantity;
         $product->save();
  
-        return redirect('/products')->with('message', 'Product created successfully');*/
+        return redirect('/products')->with('message', 'Product created successfully');
     }
 
     public function show(){
-         return response()->json([
-        'data' => [
-            'title' => $book->title,
-            'description' => $book->description,
-            'author' => $book->author->name
-        ]
-    ]);
+
     }
+
+   
 }
 

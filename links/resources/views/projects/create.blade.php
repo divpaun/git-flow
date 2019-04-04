@@ -4,7 +4,7 @@
 <div class="container">
 <h1 class="text-center">Create Project</h1><br>
 
-  <form method="post" action="/projects" enctype="multipart/form-data">
+  <form method="post" action="/projects">
   	{{ csrf_field()  }}
   	 <div class="row">
     	 	<div class="col-2"></div>
@@ -26,16 +26,6 @@
     	 	</div>
 
     	 </div><Br>
-         <div class="row">
-            <div class="col-2"></div>
-            <div class="col-2">
-                <label>Image</label>
-            </div>
-            <div class="col-6">
-                <input type="file" name="image">
-            </div>
-
-         </div><Br>
     	 <div class="row">
     	 	<div class="col-2"></div>
     	 	<div class="col-2">
