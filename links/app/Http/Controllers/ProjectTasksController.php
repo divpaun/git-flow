@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Task;
+use App\Project;
 
 class ProjectTasksController extends Controller
 {
@@ -17,5 +18,10 @@ class ProjectTasksController extends Controller
     	]);
 
     	return back(); 
+    }
+    public function create(Project $project){
+    	$attributes = request()->validate(['description' => 'required']);
+		$project->addTask($attributes);
+		return back();
     }
 }
