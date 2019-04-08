@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Project;
 class ProjectsController extends Controller
 {
+     public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(){
 	$projects = Project::all();
 
@@ -25,7 +30,7 @@ class ProjectsController extends Controller
         $destinationPath = 'uploads';
         $file->move($destinationPath,$file->getClientOriginalName());
 
-        return $request->old('title');
+       // return $request->old('title');
           
     	/*$project = new Project();
 
@@ -41,17 +46,25 @@ class ProjectsController extends Controller
 
             'description' => request('description'),
 
-            'image' => $file->getClientOriginalName()
+            'image' => $file->getClientOriginalName(),
+
+            'owner_id' => auth()->id()
 
             ]);
 
-    	return redirect('/projects')->with('message','Project Added Successfully.');
+        return redirect('/projects')->with('message','Project Added Successfully.');
+
+    	
     }
 
     public function show(Project $project){
         //$projects = Project::find($id);
-
-      //return $project;
+        $this->authorize('update', $project);
+     //return $project->owner_id;
+        if($project->owner_id !== auth()->id()){
+           // return "Hello";
+           // abort(403);
+        }
      return view('projects.show', compact('project'));
     }
 
