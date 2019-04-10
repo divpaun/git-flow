@@ -26,16 +26,7 @@
     	 	</div>
 
     	 </div><Br>
-         <div class="row">
-            <div class="col-2"></div>
-            <div class="col-2">
-                <label>Image</label>
-            </div>
-            <div class="col-6">
-                <input type="file" name="image">
-            </div>
-
-         </div><Br>
+        
     	 <div class="row">
     	 	<div class="col-2"></div>
     	 	<div class="col-2">

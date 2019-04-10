@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Mail;
 use Illuminate\Http\Request;
+use App\Mail\ProjectCreated;
 use App\Project;
 class ProjectsController extends Controller
 {
@@ -25,34 +26,41 @@ class ProjectsController extends Controller
 
     public function store(Request $request){
 
-        $file = $request->file('image');
+       // $file = $request->file('image');
        
-        $destinationPath = 'uploads';
-        $file->move($destinationPath,$file->getClientOriginalName());
+        /*$destinationPath = 'uploads';
+        $file->move($destinationPath,$file->getClientOriginalName());*/
+
+       /* $attributes = request()->validate([
+            'title' => ['required','min:3'],
+
+            'description' => ['required','min:3'],
+        ]);
+
+        $attributes['owner_id'] = auth()->id();*/
+
+       
 
        // return $request->old('title');
           
-    	/*$project = new Project();
+    	$project = new Project();
 
     	$project->title = request('title');
 
     	$project->description = request('description');
 
+        $project->owner_id = auth()->id();
 
-    	$project->save();*/
+    	$project->save();
 
-        Project::create([
-            'title' => request('title'),
+        //$project = Project::create($attributes);
 
-            'description' => request('description'),
+        $mail = Mail::to('divyesh@improwised.com')->send(
+            new ProjectCreated($project)
 
-            'image' => $file->getClientOriginalName(),
-
-            'owner_id' => auth()->id()
-
-            ]);
-
-        return redirect('/projects')->with('message','Project Added Successfully.');
+        );
+        return $mail;
+        //return redirect('/projects')->with('message','Project Added Successfully.');
 
     	
     }
