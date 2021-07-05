@@ -35,7 +35,42 @@
  
   </div>
 
-  <a class="btn btn-primary" href="/projects/{{$project->id}}/edit">Edit</a>
+  <a class="btn btn-primary" href="/projects/{{$project->id}}/edit">Edit</a><Br> <br>
+
+  <form method="post" action="/projects/{{$project->id}}/tasks">
+
+    @csrf
+     @if(count($errors))
+                    <ul class="alert alert-danger well">
+                        @foreach($errors->all() as $error)
+                            <li class="list-unstyled">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                @endif
+    <div class="row">
+        <div class="col-4"></div>   
+      <div class="col-2">
+        <label class="lable" for="description">New Task</label>
+         </div>
+        <div class="col-2">
+          <input type="text" class="form-control" name="description" placeholder="New Task" />
+        </div>
+     
+        
+    </div><br>
+    <div class="row">
+        <div class="col-4"></div>   
+      <div class="col-2">
+        <label class="lable" for="description">&nbsp;</label>
+         </div>
+         
+        <div class="col-2">
+         <button class="btn btn-primary">Save</button>
+        </div>
+     
+        
+    </div>
+  </form>
   
 </div>
   

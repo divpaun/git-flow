@@ -72,30 +72,32 @@ Route::delete('/projects/{project}','ProjectsController@destroy');
 
 /* Start Products */
 
+Route::get('session/get','ProductsController@accessSessionData');
+Route::get('session/set','ProductsController@storeSessionData');
+Route::get('session/remove','ProductsController@deleteSessionData');
+
+Route::get('test','ProductsController@testFunc');
+
 Route::get('/products', 'ProductsController@index');
 Route::post('/products', 'ProductsController@store');
 
 Route::post('/products', 'ProductsController@show');
 
 Route::patch('/tasks/{task}', 'ProjectTasksController@update');
+Route::post('/projects/{project}/tasks/', 'ProjectTasksController@create');
 
 /* End Products */
 
 Route::get('about/', function () {
     /*return response('Hello World', 200)
                   ->header('Content-Type', 'text/plain');*/
-    return response()->json([
-    'name' => 'Abigail',
-    'state' => 'CA'
-]);
+    //session(['name' => 'JohnDoe']);
+                  //return session('name');
+                  return view('about');
 });
 
 Route::get('contact/', function () {
     return view('contact', ['name' => 'James']);
-});
-
-Route::get('signup/', function () {
-    return view('signup');
 });
 
 Auth::routes();

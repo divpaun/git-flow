@@ -1,11 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Mail;
 use Illuminate\Http\Request;
+use App\Mail\ProjectCreated;
 use App\Project;
 class ProjectsController extends Controller
 {
+     public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(){
 	$projects = Project::all();
 
@@ -20,38 +26,53 @@ class ProjectsController extends Controller
 
     public function store(Request $request){
 
-        $file = $request->file('image');
+       // $file = $request->file('image');
        
-        $destinationPath = 'uploads';
-        $file->move($destinationPath,$file->getClientOriginalName());
+        /*$destinationPath = 'uploads';
+        $file->move($destinationPath,$file->getClientOriginalName());*/
 
-        return $request->old('title');
+       /* $attributes = request()->validate([
+            'title' => ['required','min:3'],
+
+            'description' => ['required','min:3'],
+        ]);
+
+        $attributes['owner_id'] = auth()->id();*/
+
+       
+
+       // return $request->old('title');
           
-    	/*$project = new Project();
+    	$project = new Project();
 
     	$project->title = request('title');
 
     	$project->description = request('description');
 
+        $project->owner_id = auth()->id();
 
-    	$project->save();*/
+    	$project->save();
 
-        Project::create([
-            'title' => request('title'),
+        //$project = Project::create($attributes);
 
-            'description' => request('description'),
+        $mail = Mail::to('divyesh@improwised.com')->send(
+            new ProjectCreated($project)
 
-            'image' => $file->getClientOriginalName()
+        );
+        return $mail;
+        //return redirect('/projects')->with('message','Project Added Successfully.');
 
-            ]);
-
-    	return redirect('/projects')->with('message','Project Added Successfully.');
+    	
     }
 
     public function show(Project $project){
         //$projects = Project::find($id);
-
-      //return $project;
+        $this->authorize('update', $project);
+     //return $project->owner_id;
+        if($project->owner_id !== auth()->id()){
+           // return "Hello";
+           // abort(403);
+        }
      return view('projects.show', compact('project'));
     }
 
